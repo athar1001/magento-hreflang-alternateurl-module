@@ -175,11 +175,14 @@ class StoreLang
 
                     $this->storeManager->setCurrentStore($store->getStoreId());
 
-                    $langUrl = $store->getUrl($urlPath, ['_query' => $queryParams]);
+                    $langUrl = $store->getUrl('', [
+                        '_direct' => $urlPath,
+                        '_query' => $queryParams,
+                    ]);
 
                     if ($stripSlash) {
                         // Remove slash to avoid redirect
-                        $langUrl = substr_replace($langUrl, '', strrpos($langUrl, '/'), 1);
+                        $langUrl = preg_replace('~/+(?=[?#]|$)~', '', $langUrl);
                     }
 
                     if ($this->urlModifier) {
