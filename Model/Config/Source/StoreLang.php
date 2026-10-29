@@ -157,11 +157,8 @@ class StoreLang
                         ]
                     );
 
-                    $stripSlash = false;
-
                     if ($rewrite) {
                         $urlPath    = $rewrite->getRequestPath();
-                        $stripSlash = substr_compare($urlPath, '/', -1) !== 0; // Check if rewrite has a slash
                     } else {
                         $urlPath = $storeCategory->getUrlPath();
                     }
@@ -179,11 +176,6 @@ class StoreLang
                         '_direct' => $urlPath,
                         '_query' => $queryParams,
                     ]);
-
-                    if ($stripSlash) {
-                        // Remove slash to avoid redirect
-                        $langUrl = preg_replace('~/+(?=[?#]|$)~', '', $langUrl);
-                    }
 
                     if ($this->urlModifier) {
                         // Amasty Shopby
